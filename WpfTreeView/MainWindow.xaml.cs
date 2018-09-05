@@ -55,12 +55,18 @@ namespace WpfTreeView
             }
         }
 
+
+        #endregion
+
+        #region Folder Expanded
+
         private void Folder_Expanded(object sender, RoutedEventArgs e)
         {
+            #region Initial checks
             var item = (TreeViewItem)sender;
 
             //Check if the item contains the dummy data
-            if((item.Items.Count != 1) || (item.Items[0] != null))
+            if ((item.Items.Count != 1) || (item.Items[0] != null))
             {
                 //if it isn't, then return
                 return;
@@ -71,15 +77,17 @@ namespace WpfTreeView
 
             //get the full path
             var fullPath = (string)item.Tag;
+            #endregion
 
-            //Create a blanks list
+            #region Get Folders 
+            //Create a blanks list for directories
             var directories = new List<string>();
 
             //Try and get directories from the folder
             //ignoring any issues that we encounter
             try
             {
-                
+
                 var dirs = Directory.GetDirectories(fullPath);
 
                 //try and 
@@ -111,10 +119,45 @@ namespace WpfTreeView
                 item.Items.Add(subItem);
             });
 
+            #endregion
 
+            #region Get Files
+            //Create a blanks list for directories
+            var files = new List<string>();
+
+            //Try and get directories from the folder
+            //ignoring any issues that we encounter
+            try
+            {
+
+                var fs = Directory.GetFiles(fullPath);
+
+                //try and 
+                if (fs.Length > 0)
+                    directories.AddRange(fs);
+            }
+
+            catch { }
+
+            //For each file...
+            directories.ForEach(filePath =>
+            {
+                //Create file item
+                var subItem = new TreeViewItem()
+                {
+                    //set file name
+                    Header = GetFileFolderName(filePath),
+                    //set folder path
+                    Tag = filePath
+                };
+
+                //add items to the parent
+                item.Items.Add(subItem);
+            });
+            #endregion
         }
-        #endregion
 
+        #endregion 
         /// <summary>
         /// Find the file or folder name from a ful path
         /// </summary>
