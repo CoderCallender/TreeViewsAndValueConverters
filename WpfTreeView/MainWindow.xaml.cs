@@ -72,7 +72,7 @@ namespace WpfTreeView
             var item = (TreeViewItem)sender;
 
             //Check if the item contains the dummy data
-            if ((item.Items.Count != 1) || (item.Items[0] != null))
+            if (item.Items.Count != 1 || item.Items[0] != null)
             {
                 //if it isn't, then return
                 return;
@@ -140,16 +140,16 @@ namespace WpfTreeView
 
                 //try and 
                 if (fs.Length > 0)
-                    directories.AddRange(fs);
+                    files.AddRange(fs);
             }
 
             catch { }
 
             //For each file...
-            directories.ForEach(filePath =>
+            files.ForEach(filePath =>
             {
                 //Create file item
-                var subItem = new TreeViewItem()
+                var subItem2 = new TreeViewItem()
                 {
                     //set file name
                     Header = GetFileFolderName(filePath),
@@ -158,7 +158,7 @@ namespace WpfTreeView
                 };
 
                 //add items to the parent
-                item.Items.Add(subItem);
+                item.Items.Add(subItem2);
             });
             #endregion
         }
