@@ -7,7 +7,7 @@
         Loaded="Window_Loaded"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <StackPanel>
+    <Grid>
 
      
         <TreeView x:Name="FolderView">
@@ -18,7 +18,12 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Width="20" Margin="3" Source="Image/drive.png" />
+                                    <Image Width="20" Margin="3" Source="{Binding 
+                                        RelativeSource={RelativeSource 
+                                            Mode=FindAncestor, 
+                                            AncestorType={x:Type TreeViewItem}},
+                                            Path=Tag,
+                                        Converter={x:Static local:HeaderToImageconverter.Instance}}" />
                                     <TextBlock VerticalAlignment="Center" Text="{Binding}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -27,5 +32,5 @@
                 </Style>
             </TreeView.Resources>
         </TreeView>
-    </StackPanel>
+    </Grid>
 </Window>
