@@ -149,7 +149,7 @@ namespace WpfTreeView
             files.ForEach(filePath =>
             {
                 //Create file item
-                var subItem2 = new TreeViewItem()
+                var subItem = new TreeViewItem()
                 {
                     //set file name
                     Header = GetFileFolderName(filePath),
@@ -158,7 +158,7 @@ namespace WpfTreeView
                 };
 
                 //add items to the parent
-                item.Items.Add(subItem2);
+                item.Items.Add(subItem);
             });
             #endregion
         }
